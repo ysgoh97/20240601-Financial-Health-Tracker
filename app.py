@@ -16,7 +16,12 @@ palm.configure(api_key=makersuite_api)
 model = {"model": "models/chat-bison-001"}
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'static/uploads'  # Configure upload directory
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+if not os.path.exists('static'):
+    os.mkdir('static')
+if not os.path.exists('static/uploads'):
+    os.mkdir('static/uploads')
+
     
 @app.route("/",methods=["GET","POST"])
 def index():
