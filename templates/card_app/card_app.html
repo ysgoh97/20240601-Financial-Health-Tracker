@@ -1,0 +1,33 @@
+<style>
+    .container {width:100%; margin:auto;}
+    @media (min-width:600px) {.container {width:80%;}}
+    @media (min-width:768px) {.container {width:60%;}}
+    @media (min-width:1024px) {.container {width:50%;}}
+</style>
+
+
+<div class="container">
+<h1>Credit Card Application</h1>
+
+<form action="/card_result" method="post">
+    <h3>Select a card : </h3>
+    <select id="card" name="card" required>
+        <option value="Card 1">Card 1</option>
+        <option value="Card 2">Card 2</option>
+        <option value="Card 3">Card 3</option>
+    </select> 
+
+    <h3>Enter a card design : </h3>
+    <p><input type="text" name="design" required></p>
+    <p><input type="submit" value="Submit"></p>
+</form>
+
+<br>
+<form action="/main" method="post">
+    <p><input type="submit" value="Main"></p>
+</form>
+
+<form action="/end" method="post">
+    <p><input type="submit" value="Logout"></p>
+</form>
+</div>

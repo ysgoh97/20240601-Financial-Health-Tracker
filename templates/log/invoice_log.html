@@ -1,0 +1,16 @@
+<style>
+    .container {width:100%; margin:auto;}
+    @media (min-width:600px) {.container {width:80%;}}
+    @media (min-width:768px) {.container {width:60%;}}
+    @media (min-width:1024px) {.container {width:50%;}}
+</style>
+
+
+<div class="container">
+<h3>Invoice log : </h3>
+<p>{{ r }}</p>
+
+<form action="/end" method="post">
+    <p><input type="submit" value="End"></p>
+</form>
+</div>
