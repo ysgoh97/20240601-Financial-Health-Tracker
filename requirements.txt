@@ -3,7 +3,7 @@ gunicorn
 google-generativeai
 replicate
 pysqlite3
-pip3 install torch torchvision torchaudio
-pip install flax
-pip install diffusers["torch"] transformers
-pip install matplotlib
+torch
+flax
+diffusers["torch"] transformers
+matplotlib
