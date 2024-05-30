@@ -4,6 +4,6 @@ google-generativeai
 replicate
 pysqlite3
 torch
-flax
-diffusers["torch"] transformers
+diffusers["torch"]
+transformers
 matplotlib
