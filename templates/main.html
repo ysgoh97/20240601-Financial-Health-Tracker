@@ -1,0 +1,55 @@
+<style>
+    .container {width:100%; margin:auto;}
+    @media (min-width:600px) {.container {width:80%;}}
+    @media (min-width:768px) {.container {width:60%;}}
+    @media (min-width:1024px) {.container {width:50%;}}
+
+    .left-align {
+            text-align: left; /* Aligns text inside the button to the left */
+        }
+</style>
+
+
+<div class="container">
+<h1>Financial Health Tracker</h1>
+
+<img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGRlc2t8ZW58MHx8fHwxNjI4MDg1ODkz&ixlib=rb-1.2.1&q=80&w=400"
+    width="320" height="240"></img>
+
+<h3>Hi, {{name}}, how can I help you today?</h3>
+
+<form action="/scan_invoice" method="post">
+    <input type="hidden" name="username" value="{{ username }}">
+    <p><input type="submit" value="Scan Invoice"></p>
+</form>
+
+<form action="/show_invoice" method="post">
+    <input type="hidden" name="username" value="{{ username }}">
+    <p><input type="submit" value="View Invoice Added"></p>
+</form>
+
+<form action="/delete_invoice" method="post">
+    <input type="hidden" name="username" value="{{ username }}">
+    <p><input type="submit" value="Delete Invoice Added"></p>
+</form>
+
+<form action="/fin_health" method="post">
+    <p><button type="submit" class="left-align">
+        Financial Health &<br>
+        Credit Card Advise
+    </button></p>
+</form>
+
+<form action="/card_app" method="post">
+    <p><input type="submit" value="Credit Card Application"></p>
+</form>
+
+<form action="/delete_acc" method="post">
+    <p><input type="submit" value="Delete account"></p>
+</form>
+
+<br>
+<form action="/end" method="post">
+    <p><input type="submit" value="Logout"></p>
+</form>
+</div>

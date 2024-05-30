@@ -1,0 +1,97 @@
+<style>
+  .container {width:100%; margin:auto;}
+  @media (min-width:600px) {.container {width:80%;}}
+  @media (min-width:768px) {.container {width:60%;}}
+  @media (min-width:1024px) {.container {width:50%;}}
+
+  img {
+    max-width: 50%;
+    max-height: 20%;
+  }
+
+  table, th, td {
+    border: 1px solid grey;
+    padding: 5;
+    font-size: 12px;
+  }
+</style>
+
+
+<div class="container">
+<h1>Scan Invoice</h1>
+
+{% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    <form action="/scan_invoice" method="post">
+        <p><input type="submit" value="Retry"></p>
+    </form>
+{% endif %}
+
+{% if upload_success %}
+    <h3>Invoice : </h3>
+    <img src="{{ image_url }}"></img>
+
+    <br>
+    <h3>Text extracted : </h3>
+    <p>Menu</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in invoice_res.menu %}
+            <tr>
+                <td>{{ item.nm }}</td>
+                <td>{{ item.cnt }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Sub-Total</p>
+    <table>
+        <tbody>
+            {% for key, value in invoice_res.sub_total.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Total</p>
+    <table>
+        <tbody>
+            <tr>
+                <td>Total Price</td>
+                <td>{{ invoice_res.total.total_price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="/add_invoice" method="post">
+        <input type="hidden" name="username" value="{{ username }}">
+        <input type="hidden" name="invoice_res" value="{{ invoice_res }}">
+        <p><input type="submit" value="Add to database"></p>
+    </form>
+    
+    <form action="/scan_invoice" method="post">
+        <p><input type="submit" value="Back"></p>
+    </form>
+{% endif %}
+
+<br>
+<form action="/main" method="post">
+    <p><input type="submit" value="Main"></p>
+</form>
+
+<form action="/end" method="post">
+    <p><input type="submit" value="Logout"></p>
+</form>
+</div>
