@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, Markup
 import os
 import sqlite3
-import datetime
+import datetime, pytz, time
 from werkzeug.utils import secure_filename
 import json
 import google.generativeai as palm
@@ -165,6 +165,7 @@ def display_invoice():
     upload_success = True
     image_url = url_for("static", filename=f"uploads/{filename}")
     
+    start_time = time.time()
     try:
         r = replicate.run(
            "sulthonmb/ocr-receipt:7d2b5300247f1e85742ebd824a693c55fe4e4f6d50caaccb1265834f399754d6",
@@ -194,6 +195,13 @@ def display_invoice():
         invoice_res = invoice_res.replace('\"tax_price\": ', '\"Tax Price\": ')
         invoice_res = invoice_res.replace('\"etc\": ', '\"Others\": ')
         invoice_res = json.loads(invoice_res)
+
+    end_time = time.time()
+    time_taken = end_time - start_time
+    h = time_taken // 3600
+    m = (time_taken % 3600) // 60
+    s = time_taken % 60
+    print(f"Time taken: {int(h)} h, {int(m)} min, and {s:.2f} s")
     return render_template('scan_invoice/display_invoice.html', 
                            username=username, 
                            upload_success=upload_success, 
@@ -355,6 +363,7 @@ def fin_result():
     prompt2 += "In a new paragraph, list 5 credits card in Singapore that are suitable for me. "
     prompt2 += "Use * to start a list."
 
+    start_time = time.time()
     model = {"model": "models/chat-bison-001"}
     r = palm.chat(**model, messages=prompt)
     r2 = palm.chat(**model, messages=prompt2)
@@ -385,8 +394,14 @@ def fin_result():
         plt.close(fig)
         charts = url_for("static", filename="generated/financial_charts.png")
         return charts
-
     charts = plot_bars(income, expense, asset, debt)
+
+    end_time = time.time()
+    time_taken = end_time - start_time
+    h = time_taken // 3600
+    m = (time_taken % 3600) // 60
+    s = time_taken % 60
+    print(f"Time taken: {int(h)} h, {int(m)} min, and {s:.2f} s")
     return(render_template("fin_health/fin_result.html", username=username, fin_res=fin_res, fin_res2=fin_res2, charts=charts))
     
 
@@ -402,6 +417,7 @@ def card_result():
     card = request.form.get("card")
     design = request.form.get("design")
     prompt = f"{design} design printed on a credit card"
+    start_time = time.time()
     try:
         r = replicate.run(
            "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
@@ -417,6 +433,13 @@ def card_result():
             card_res = url_for("static", filename="generated/card_design.png")
         except:
             card_res = url_for("static", filename="sample/card_design.jpeg")
+
+    end_time = time.time()
+    time_taken = end_time - start_time
+    h = time_taken // 3600
+    m = (time_taken % 3600) // 60
+    s = time_taken % 60
+    print(f"Time taken: {int(h)} h, {int(m)} min, and {s:.2f} s")
     return(render_template("card_app/card_result.html", card=card, design=design, card_res=card_res))
 
 @app.route("/card_cfm",methods=["GET","POST"])
