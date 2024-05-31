@@ -3,7 +3,8 @@ gunicorn
 google-generativeai
 replicate
 pysqlite3
+pytz
 torch
-diffusers[torch]
+diffusers[torch] 
 transformers
 matplotlib
