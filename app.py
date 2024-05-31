@@ -40,7 +40,7 @@ def index():
     c.execute("CREATE TABLE IF NOT EXISTS user (username TEXT, name TEXT, email TEXT, password TEXT)")
     # c.execute("DROP TABLE IF EXISTS invoice")
     c.execute("CREATE TABLE IF NOT EXISTS invoice (username TEXT, time TIMESTAMP, invoice TEXT)")
-    c.close
+    c.close()
     conn.close()
     return(render_template("index.html"))
 
@@ -61,7 +61,7 @@ def login_fail():
 
         if not existing_user:
             error_message = "The username you entered does not exist."
-            c.close
+            c.close()
             conn.close()
             return(render_template("login/login_fail.html", error_message=error_message))
             
@@ -71,7 +71,7 @@ def login_fail():
             password_db = password_row[0]
             if password != password_db:
                 error_message = "The password you entered is incorrect."
-                c.close
+                c.close()
                 conn.close()
                 return(render_template("login/login_fail.html", error_message=error_message))
 
@@ -101,13 +101,13 @@ def signup_message():
     
     if existing_user:
         error_message = "Username already exists."
-        c.close
+        c.close()
         conn.close()
         return(render_template("login/signup_message.html", error_message=error_message))
         
     elif password != password_cfm:
         error_message = "Passwords do not match."
-        c.close
+        c.close()
         conn.close()
         return(render_template("login/signup_message.html", error_message=error_message))
         
@@ -116,7 +116,7 @@ def signup_message():
         c.execute("INSERT INTO user (username, name, email, password) VALUES(?,?,?,?)", 
                   (username, name, email, password))
         conn.commit()
-        c.close
+        c.close()
         conn.close()
         return(render_template("login/signup_message.html", signup_success=signup_success))
 
@@ -208,7 +208,7 @@ def add_invoice():
     c.execute("INSERT INTO invoice (username, time, invoice) VALUES(?,?,?)", 
                   (username, current_time, invoice_res))
     conn.commit()
-    c.close
+    c.close()
     conn.close()
     return(render_template("scan_invoice/add_invoice.html", username=username, invoice_res=invoice_res))
 
@@ -225,7 +225,7 @@ def show_invoice():
     c = conn.cursor()
     c.execute("SELECT * FROM invoice WHERE username = ? ORDER BY time DESC;", (username,))
     r = c.fetchall()
-    c.close
+    c.close()
     conn.close()
 
     table_data = []
@@ -236,7 +236,7 @@ def show_invoice():
         total_price = list(eval(invoice_str)['total'].values())[0]
         item = ""
         for i in invoice_data:
-            item += f'{i['cnt']} {i['nm']} <br>'
+            item += f"{i['cnt']} {i['nm']} <br>"
         row_id += 1
         table_data.append((row_id, time, Markup(item), total_price))
     table_data = table_data
@@ -255,7 +255,7 @@ def delete_invoice():
     c = conn.cursor()
     c.execute("SELECT * FROM invoice WHERE username = ? ORDER BY time DESC;", (username,))
     r = c.fetchall()
-    c.close
+    c.close()
     conn.close()
 
     table_data = []
@@ -266,7 +266,7 @@ def delete_invoice():
         total_price = list(eval(invoice_str)['total'].values())[0]
         item = ""
         for i in invoice_data:
-            item += f'{i['cnt']} {i['nm']} <br>'
+            item += f"{i['cnt']} {i['nm']} <br>"
         row_id += 1
         table_data.append((row_id, time, Markup(item), total_price))
     table_data = table_data
@@ -286,7 +286,7 @@ def delete_invoice_cfm():
     
     c.execute("SELECT * FROM invoice WHERE username = ? ORDER BY time DESC;", (username,))
     r = c.fetchall()
-    c.close
+    c.close()
     conn.close()
 
     table_data = []
@@ -297,7 +297,7 @@ def delete_invoice_cfm():
         total_price = list(eval(invoice_str)['total'].values())[0]
         item = ""
         for i in invoice_data:
-            item += f'{i['cnt']} {i['nm']} <br>'
+            item += f"{i['cnt']} {i['nm']} <br>"
         row_id += 1
         table_data.append((row_id, time, Markup(item), total_price))
     table_data = table_data
@@ -328,7 +328,7 @@ def fin_result():
     r = ""
     for row in c:
       r+= str(row) + "<br><br>"
-    c.close
+    c.close()
     conn.close()
 
     def format_response(text):
@@ -495,7 +495,7 @@ def user_log():
     for row in c:
       r+= str(row) + "<br><br>"
     r = Markup(r)
-    c.close
+    c.close()
     conn.close()
     return(render_template("log/user_log.html", r=r))
 
@@ -505,7 +505,7 @@ def user_deleteALL():
     c = conn.cursor()
     c.execute("DELETE FROM user")
     conn.commit()
-    c.close
+    c.close()
     conn.close()
     return(render_template("log/user_deleteALL.html"))
 
@@ -518,7 +518,7 @@ def invoice_log():
     for row in c:
       r+= str(row) + "<br><br>"
     r = Markup(r)
-    c.close
+    c.close()
     conn.close()
     return(render_template("log/invoice_log.html", r=r))
 
@@ -528,7 +528,7 @@ def invoice_delete():
     c = conn.cursor()
     c.execute("DELETE FROM invoice")
     conn.commit()
-    c.close
+    c.close()
     conn.close()
     return(render_template("log/invoice_deleteALL.html"))
 
