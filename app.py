@@ -425,14 +425,14 @@ def card_result():
         )
         card_res = r[0]
     except:
-        try:
-            pipeline = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", 
-                                                               torch_dtype=torch.float32)
-            image = pipeline(prompt, nwum_images_per_prompt=1).images[0]
-            image.save(os.path.join(app.config["GENERATED_FOLDER"], "card_design.png"))
-            card_res = url_for("static", filename="generated/card_design.png")
-        except:
-            card_res = url_for("static", filename="sample/card_design.jpeg")
+        # try:
+        #     pipeline = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", 
+        #                                                        torch_dtype=torch.float32)
+        #     image = pipeline(prompt, nwum_images_per_prompt=1).images[0]
+        #     image.save(os.path.join(app.config["GENERATED_FOLDER"], "card_design.png"))
+        #     card_res = url_for("static", filename="generated/card_design.png")
+        # except:
+        card_res = url_for("static", filename="sample/card_design.jpeg")
 
     end_time = time.time()
     time_taken = end_time - start_time
