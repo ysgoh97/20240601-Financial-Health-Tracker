@@ -189,6 +189,10 @@ def display_invoice():
                 '\"total_price\": \"218.20\"' +\
             '}' +\
         '}'
+        invoice_res = invoice_res.replace('\"subtotal_price\": ', '\"Subtotal Price\": ')
+        invoice_res = invoice_res.replace('\"service_price\": ', '\"Service Price\": ')
+        invoice_res = invoice_res.replace('\"tax_price\": ', '\"Tax Price\": ')
+        invoice_res = invoice_res.replace('\"etc\": ', '\"Others\": ')
         invoice_res = json.loads(invoice_res)
     return render_template('scan_invoice/display_invoice.html', 
                            username=username, 
@@ -200,7 +204,8 @@ def display_invoice():
 def add_invoice():
     global username, invoice_res
     username = request.form.get("username")
-    current_time = datetime.datetime.now()
+    tz = pytz.timezone('Asia/Singapore')
+    current_time = datetime.datetime.now(tz)
     invoice_res = request.form.get("invoice_res")
     
     conn = sqlite3.connect("log.db")
@@ -396,20 +401,22 @@ def card_app():
 def card_result():
     card = request.form.get("card")
     design = request.form.get("design")
-    prompt = f"full credit card printed with {design} design"
+    prompt = f"{design} design printed on a credit card"
     try:
-        # r = replicate.run(
-        #    "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
-        #     input={"prompt": prompt}
-        # )
-        # card_res = r[0]
-        pipeline = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", 
-                                                       torch_dtype=torch.float32)
-        image = pipeline(prompt, nwum_images_per_prompt=1).images[0]
-        image.save(os.path.join(app.config["GENERATED_FOLDER"], "card_design.png"))
-        card_res = url_for("static", filename="generated/card_design.png")
+        r = replicate.run(
+           "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
+            input={"prompt": prompt}
+        )
+        card_res = r[0]
     except:
-        card_res = url_for("static", filename="sample/card_design.jpeg")
+        try:
+            pipeline = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", 
+                                                               torch_dtype=torch.float32)
+            image = pipeline(prompt, nwum_images_per_prompt=1).images[0]
+            image.save(os.path.join(app.config["GENERATED_FOLDER"], "card_design.png"))
+            card_res = url_for("static", filename="generated/card_design.png")
+        except:
+            card_res = url_for("static", filename="sample/card_design.jpeg")
     return(render_template("card_app/card_result.html", card=card, design=design, card_res=card_res))
 
 @app.route("/card_cfm",methods=["GET","POST"])
