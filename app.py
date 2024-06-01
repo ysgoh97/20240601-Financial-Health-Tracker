@@ -6,8 +6,8 @@ from werkzeug.utils import secure_filename
 import json
 import google.generativeai as palm
 import replicate
-from diffusers import StableDiffusionPipeline
-import torch
+#from diffusers import StableDiffusionPipeline
+#import torch
 import matplotlib.pyplot as plt
 
 flag = 1
