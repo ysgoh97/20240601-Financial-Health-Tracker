@@ -3,6 +3,7 @@ gunicorn
 google-generativeai
 replicate
 pysqlite3
+pydrive
 pytz
 # torch
 # diffusers[torch] 
