@@ -68,10 +68,12 @@
     <p>Total</p>
     <table>
         <tbody>
+            {% for key, value in invoice_res.total.items() %}
             <tr>
-                <td>Total Price</td>
-                <td>{{ invoice_res.total.total_price }}</td>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 
