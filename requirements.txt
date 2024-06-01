@@ -4,7 +4,7 @@ google-generativeai
 replicate
 pysqlite3
 pytz
-torch
-diffusers[torch] 
-transformers
+# torch
+# diffusers[torch] 
+# transformers
 matplotlib
