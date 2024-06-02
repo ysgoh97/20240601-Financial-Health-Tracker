@@ -25,7 +25,6 @@ scope = ['https://www.googleapis.com/auth/drive']
 gauth = GoogleAuth()
 gauth.credentials = ServiceAccountCredentials.from_json_keyfile_name(google_key, scope)
 drive = GoogleDrive(gauth)
-#folder_id = ""
 
 app = Flask(__name__)
 app.config["GENERATED_FOLDER"] = "static/generated"
@@ -179,6 +178,7 @@ def display_invoice():
     image_url = url_for("static", filename=f"uploads/{filename}")
     start_time = time.time()
     #try:
+    folder_id = "1jndF65ntjku05ZlF5AVjeIBcieYFO8gF"
     file = drive.CreateFile({'parents': [{"id": folder_id}], 'title': filepath.split('/')[-1]})
     file.SetContentFile(filepath)
     file.Upload()
