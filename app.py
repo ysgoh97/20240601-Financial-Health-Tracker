@@ -178,6 +178,7 @@ def display_invoice():
     image_url = url_for("static", filename=f"uploads/{filename}")
     start_time = time.time()
     try:
+        # There is not enough memory on free render account to run this model
         folder_id = "1jndF65ntjku05ZlF5AVjeIBcieYFO8gF"
         file = drive.CreateFile({'parents': [{"id": folder_id}], 'title': filepath.split('/')[-1]})
         file.SetContentFile(filepath)
