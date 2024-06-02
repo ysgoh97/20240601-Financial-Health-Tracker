@@ -178,32 +178,32 @@ def display_invoice():
     upload_success = True
     image_url = url_for("static", filename=f"uploads/{filename}")
     start_time = time.time()
-    try:
-        file = drive.CreateFile({'parents': [{"id": folder_id}], 'title': filepath.split('/')[-1]})
-        file.SetContentFile(filepath)
-        file.Upload()
-        file.InsertPermission({
-            'type': 'anyone',
-            'value': 'anyone',
-            'role': 'reader'
-            })
-        gdrive_url = file['webContentLink'].split("&export=download")[0]
-        r = replicate.run(
-           "sulthonmb/ocr-receipt:7d2b5300247f1e85742ebd824a693c55fe4e4f6d50caaccb1265834f399754d6",
-            input={"image": gdrive_url}
-        )
-        file.Delete()
-        invoice_res = json.loads(r)
-    except:
-        image_url = url_for("static", filename="sample/invoice.jpg")
-        invoice_res = {'menu': [{'nm': 'Tung Lok Curry Fish Head @38.00', 'cnt': '1 x', 'price': '38.00'},
-                                {'nm': 'Crispy Fish Skin with Salted Egg Yolk @14.00', 'cnt': '1 x', 'price': '14.00'},
-                                {'nm': 'Crispy Eggplant with Pork Floss @14.00', 'cnt': '1 x', 'price': '14.00'},
-                                {'nm': 'Asparagus @20.00', 'cnt': '1 x', 'price': '20.00'},
-                                {'nm': 'TungLok X.O. Rice Dumpling Bundle @49.20', 'cnt': '2 x', 'price': '98.40'},
-                                {'nm': 'Oat Rice Dumpling with Mushrooms Bundle @46.80', 'cnt': '2 x', 'price': '46.80'}],
-                       'sub_total': {'subtotal_price': '231.20', 'service_price': '0.00', 'tax_price': '18.02', 'etc': '-31.00'},
-                       'total': {'total_price': '218.20'}}
+    #try:
+    file = drive.CreateFile({'parents': [{"id": folder_id}], 'title': filepath.split('/')[-1]})
+    file.SetContentFile(filepath)
+    file.Upload()
+    file.InsertPermission({
+        'type': 'anyone',
+        'value': 'anyone',
+        'role': 'reader'
+        })
+    gdrive_url = file['webContentLink'].split("&export=download")[0]
+    r = replicate.run(
+       "sulthonmb/ocr-receipt:7d2b5300247f1e85742ebd824a693c55fe4e4f6d50caaccb1265834f399754d6",
+        input={"image": gdrive_url}
+    )
+    file.Delete()
+    invoice_res = json.loads(r)
+    # except:
+    #     image_url = url_for("static", filename="sample/invoice.jpg")
+    #     invoice_res = {'menu': [{'nm': 'Tung Lok Curry Fish Head @38.00', 'cnt': '1 x', 'price': '38.00'},
+    #                             {'nm': 'Crispy Fish Skin with Salted Egg Yolk @14.00', 'cnt': '1 x', 'price': '14.00'},
+    #                             {'nm': 'Crispy Eggplant with Pork Floss @14.00', 'cnt': '1 x', 'price': '14.00'},
+    #                             {'nm': 'Asparagus @20.00', 'cnt': '1 x', 'price': '20.00'},
+    #                             {'nm': 'TungLok X.O. Rice Dumpling Bundle @49.20', 'cnt': '2 x', 'price': '98.40'},
+    #                             {'nm': 'Oat Rice Dumpling with Mushrooms Bundle @46.80', 'cnt': '2 x', 'price': '46.80'}],
+    #                    'sub_total': {'subtotal_price': '231.20', 'service_price': '0.00', 'tax_price': '18.02', 'etc': '-31.00'},
+    #                    'total': {'total_price': '218.20'}}
     invoice_res['sub_total']['Subtotal Price'] = invoice_res['sub_total'].pop("subtotal_price")
     invoice_res['sub_total']['Service Price'] = invoice_res['sub_total'].pop("service_price")
     invoice_res['sub_total']['Tax Price'] = invoice_res['sub_total'].pop("tax_price")
