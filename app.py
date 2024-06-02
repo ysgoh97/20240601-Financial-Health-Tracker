@@ -178,7 +178,6 @@ def display_invoice():
     image_url = url_for("static", filename=f"uploads/{filename}")
     start_time = time.time()
     try:
-        # There is not enough memory on free render account to run this model
         folder_id = "1jndF65ntjku05ZlF5AVjeIBcieYFO8gF"
         file = drive.CreateFile({'parents': [{"id": folder_id}], 'title': filepath.split('/')[-1]})
         file.SetContentFile(filepath)
@@ -205,11 +204,6 @@ def display_invoice():
                                 {'nm': 'Oat Rice Dumpling with Mushrooms Bundle @46.80', 'cnt': '2 x', 'price': '46.80'}],
                        'sub_total': {'subtotal_price': '231.20', 'service_price': '0.00', 'tax_price': '18.02', 'etc': '-31.00'},
                        'total': {'total_price': '218.20'}}
-    invoice_res['sub_total']['Subtotal Price'] = invoice_res['sub_total'].pop("subtotal_price")
-    invoice_res['sub_total']['Service Price'] = invoice_res['sub_total'].pop("service_price")
-    invoice_res['sub_total']['Tax Price'] = invoice_res['sub_total'].pop("tax_price")
-    invoice_res['sub_total']['Others'] = invoice_res['sub_total'].pop("etc")
-    invoice_res['total']['Total Price'] = invoice_res['total'].pop("total_price")
 
     end_time = time.time()
     time_taken = end_time - start_time
