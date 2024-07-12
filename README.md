@@ -1,5 +1,5 @@
 # Description
-This repository is a group assignment for the module "AI and Analytics in Finance, Credit and Related Risks (2024 Int12)", as part of NTU FlexiMasters in Business and Financial Analytics.
+This repository is a group assignment for the module "AI and Analytics in Finance, Credit and Related Risks (2024 Int12)", as part of NTU FlexiMasters in Business and Financial Analytics. The deployed web application can be found [here](https://two0240601-financial-health-tracker.onrender.com).
 
 The objective of this project is to enhance financial services for a bank by developing a web application that utilises AI to automate invoice processing and provide personalised financial advisory services. 
 
@@ -24,4 +24,4 @@ This initial project phase focuses on the following core functionalities:
 * Personalised credit card recommendations using  LLM (PaLM) 
 * Personalised credit card design using Stable Diffusion (Replicate)
 
-The app is built with SQLite, Python, HTML, and Flask, and is deployed on Render. The deployed web application can be found [here](https://two0240601-financial-health-tracker.onrender.com).
+The app is built with SQLite, Python, HTML, and Flask, and is deployed on Render. 
