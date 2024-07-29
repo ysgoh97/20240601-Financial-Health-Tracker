@@ -15,13 +15,13 @@ This application offers a unique solution by:
 * Allowing users to design their own credit cards with generative AI, increasing user engagement and creating unique user experience
 * Providing a user-friendly platform for managing invoices and financial information
 
-This initial project phase focuses on the following core functionalities:
+The application is built with SQLite, Python, HTML, and Flask, and is deployed on Render. This initial project phase focuses on the following core functionalities:
 * User account creation and login
-* Invoice uploading, scanning, and extraction using OCR (Replicate)
+* Invoice uploading, scanning, and extraction using OCR (Replicate)***
 * User interface for displaying and deleting stored invoices
 * Financial health assessment through user-provided data using LLM (PaLM)
 * Visual representation of income/expense and asset/debt disparity highlighting the financial health status
 * Personalised credit card recommendations using  LLM (PaLM) 
-* Personalised credit card design using Stable Diffusion (Replicate)
+* Personalised credit card design using Stable Diffusion (Replicate)***
 
-The app is built with SQLite, Python, HTML, and Flask, and is deployed on Render. 
+DISCLAIMER: As Replicate models are not free, the functionalities marked with *** will be replaced with dummy model outputs once the Replicate account used for deployment runs out of credit. 
